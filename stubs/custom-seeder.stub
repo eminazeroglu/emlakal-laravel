@@ -1,0 +1,42 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use App\Models\$CLASS_NAME$;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
+
+class $CLASS_NAME$Seeder extends Seeder
+{
+    public function items(): array
+    {
+        return [
+            ['name' => ''],
+        ];
+    }
+
+    public function run()
+    {
+        Schema::disableForeignKeyConstraints();
+        $model = new $CLASS_NAME$();
+        $model->query()->truncate();
+        foreach ($this->items() as $index => $item):
+            if ($item['name']):
+                $langs      = \App\Models\Language::query()->pluck('code');
+                $translates = [];
+                foreach ($langs as $lang):
+                    $translates[$lang] = [
+                        'name' => $item['name']
+                    ];
+                endforeach;
+                $model->query()->insert([
+                    'url'        => helper()->createSlug($model, array_first($translates)['name']),
+                    'translates' => json_encode($translates),
+                    'is_active'  => 1
+                ]);
+            endif;
+        endforeach;
+        Schema::enableForeignKeyConstraints();
+    }
+
+}

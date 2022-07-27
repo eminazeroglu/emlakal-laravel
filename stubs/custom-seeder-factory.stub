@@ -1,0 +1,18 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use App\Models\$CLASS_NAME$;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
+
+class $CLASS_NAME$Seeder extends Seeder
+{
+    public function run()
+    {
+        Schema::disableForeignKeyConstraints();
+        $CLASS_NAME$::query()->truncate();
+        $CLASS_NAME$::factory(20)->create();
+        Schema::enableForeignKeyConstraints();
+    }
+}

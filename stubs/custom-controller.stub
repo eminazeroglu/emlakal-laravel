@@ -1,0 +1,20 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use App\Http\Controllers\ApiController;
+use App\Http\Requests\$CLASS_NAME$Request;
+use App\Interfaces\ApiRequestInterface;
+use App\Services\Models\$CLASS_NAME$Service;
+
+class $CLASS_NAME$Controller extends ApiController
+{
+    protected array $bindings = [
+        ApiRequestInterface::class => $CLASS_NAME$Request::class
+    ];
+
+    public function __construct()
+    {
+        parent::__construct(new $CLASS_NAME$Service(), '$PERMISSION$');
+    }
+}

@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use BenSampo\Enum\Enum;
+
+final class DummyClass extends Enum
+{
+    const Option = 'option';
+
+    public static function getDescription($value): string
+    {
+        return match ($value) {
+            self::Option => 'Option',
+            default => self::getKey($value),
+        };
+    }
+}

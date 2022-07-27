@@ -1,0 +1,29 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use App\Models\$CLASS_NAME$;
+use App\Services\BaseModelService;
+
+class $CLASS_NAME$Service extends BaseModelService
+{
+    public function __construct()
+    {
+        parent::__construct(new $CLASS_NAME$(), '$CLASS_NAME$');
+    }
+
+    public function findPaginateList($resource = false): array
+    {
+        $data = $this->model->query()
+            ->when(request()->query('q'), function ($q) {
+                return $q->nameLike(request()->query('q'));
+            })
+            ->latest('id')
+            ->paginate(request()->query('limit'));
+
+        return [
+            'data'  => $this->resource($data),
+            'total' => $data->total()
+        ];
+    }
+}
